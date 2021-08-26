@@ -66,6 +66,8 @@ void draw()
 
 void play()
 {
+    //player1 = O, player2 = X
+    
 
 }
 
@@ -74,16 +76,33 @@ int main()
 {
     if (!game_over)
     {
+        string start_signal;
         string * names  = setup();
-        cout << names[0] << endl;
-        //draw();
+        cout << "Welcome " << names[0] << " and " << names[1] << ". Type \"go\" to start the game." << endl;
+        cin >> start_signal;
+        if (start_signal == "go")
+        {
+            while (!game_over)
+            {
+                string respone_1;
+                cout << "Player 1 make a move: ";
+                cin >> respone_1;
+                
+                string respone_2;
+                cout << "Player 2 make a move: ";
+                cin >> respone_2;
+
+                //input positions of existing xs and os
+                draw();
+
+                //update player matrices, check if anyone is winning or gameover
+                play();
+            }
+            
+
+        }
+            
     }
-    /*
-    while (!game_over)
-    {
-        play();
-    }
-    */
     
 
 
