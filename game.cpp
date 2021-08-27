@@ -9,11 +9,23 @@ bool game_over = false;
 const int dimension = 3;
 const int box_size = 12;
 //-1 is the empty value
-int arr[dimension][dimension] = {-1};
+int arr[dimension][dimension];
+
 
 
 
 //functions
+void reset_array()
+{
+    for (size_t i = 0; i < dimension; i++)
+    {
+        for (size_t j = 0; j < dimension; j++)
+            arr[i][j] = -1;
+    }
+}
+
+
+
 string * setup()
 {
     string player_1, player_2;
@@ -65,16 +77,17 @@ void draw()
     
 }
 
-int play(int res1, int res2)
+int play(int res)
 {
     //player1 = O, player2 = X
 
-    if (arr[res1/10][res1%10] != 0)
+    if (arr[res/10][res%10] != -1)
     {
         cout << "taken";
         return 0;
     }
-    
+
+    arr[res/10][res%10] = 0;
     return 1;
 }
 
@@ -89,21 +102,22 @@ int main()
         cin >> start_signal;
         if (start_signal == "go")
         {
+            reset_array();
             while (!game_over)
             {
                 int respone_1;
                 cout << "Player 1 make a move: ";
                 cin >> respone_1;
-                
+                play(respone_1);
+
                 int respone_2;
                 cout << "Player 2 make a move: ";
                 cin >> respone_2;
-
-                //update player matrices, check if anyone is winning or gameover
-                play(respone_1, respone_2);
+                play(respone_1);
+            
 
                 //input positions of existing xs and os
-                draw();
+                //draw();
 
 
             }
