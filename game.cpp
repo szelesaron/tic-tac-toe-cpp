@@ -8,7 +8,8 @@ using namespace std;
 bool game_over = false;
 const int dimension = 3;
 const int box_size = 12;
-int * arr  = new int[dimension * dimension];
+//-1 is the empty value
+int arr[dimension][dimension] = {-1};
 
 
 
@@ -64,11 +65,17 @@ void draw()
     
 }
 
-void play()
+int play(int res1, int res2)
 {
     //player1 = O, player2 = X
-    
 
+    if (arr[res1/10][res1%10] != 0)
+    {
+        cout << "taken";
+        return 0;
+    }
+    
+    return 1;
 }
 
 
@@ -84,19 +91,21 @@ int main()
         {
             while (!game_over)
             {
-                string respone_1;
+                int respone_1;
                 cout << "Player 1 make a move: ";
                 cin >> respone_1;
                 
-                string respone_2;
+                int respone_2;
                 cout << "Player 2 make a move: ";
                 cin >> respone_2;
+
+                //update player matrices, check if anyone is winning or gameover
+                play(respone_1, respone_2);
 
                 //input positions of existing xs and os
                 draw();
 
-                //update player matrices, check if anyone is winning or gameover
-                play();
+
             }
             
 
