@@ -77,17 +77,19 @@ void draw()
     
 }
 
-int play(int res)
+int play(int res, int player_num)
 {
     //player1 = O, player2 = X
 
-    if (arr[res/10][res%10] != -1)
+    if (arr[res/10][res%10] not_eq -1 || res < 0 || res > (dimension*10+dimension))
     {
-        cout << "taken";
         return 0;
     }
 
-    arr[res/10][res%10] = 0;
+    if(player_num == 0)
+        arr[res/10][res%10] = 0;
+    else
+        arr[res/10][res%10] = 1;
     return 1;
 }
 
@@ -98,32 +100,37 @@ int main()
     {
         string start_signal;
         string * names  = setup();
-        cout << "Welcome " << names[0] << " and " << names[1] << ". Type \"go\" to start the game." << endl;
-        cin >> start_signal;
-        if (start_signal == "go")
+        //cout << "Welcome " << names[0] << " and " << names[1] << ". Type \"go\" to start the game." << endl;
+        //cin >> start_signal;
+        reset_array();
+
+        while (!game_over)
         {
-            reset_array();
-            while (!game_over)
+            int respone_1;
+            cout << "Player 1 make a move: ";
+            cin >> respone_1;
+            if(play(respone_1, 0) == 0)
             {
-                int respone_1;
-                cout << "Player 1 make a move: ";
-                cin >> respone_1;
-                play(respone_1);
-
-                int respone_2;
-                cout << "Player 2 make a move: ";
-                cin >> respone_2;
-                play(respone_1);
-            
-
-                //input positions of existing xs and os
-                //draw();
-
-
+                cout << "Invalid step." << endl;
             }
-            
+      
+            int respone_2;
+            cout << "Player 2 make a move: ";
+            cin >> respone_2;
+            if(play(respone_2, 1) == 0)
+            {
+                cout << "Invalid step."<< endl;
+            }
+     
+
+            //input positions of existing xs and os
+            //draw();
+
 
         }
+        
+
+        
             
     }
     
