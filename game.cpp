@@ -24,7 +24,15 @@ void reset_array()
     }
 }
 
-
+void show_array()
+{
+    for (size_t i = 0; i < dimension; i++)
+    {
+        for (size_t j = 0; j < dimension; j++)
+            cout << arr[i][j];
+    cout << endl;
+    }
+}
 
 string * setup()
 {
@@ -92,7 +100,12 @@ int play(int res, int player_num)
         arr[res/10][res%10] = 1;
     return 1;
 }
-
+/*
+TODO:
+    1. Make game fluid - if step is invalid ,request new - done
+    2. check when one player wins
+    3. handle exceptions ->longer input, string ect.
+*/
 
 int main()
 {
@@ -106,26 +119,33 @@ int main()
 
         while (!game_over)
         {
-            int respone_1;
-            cout << "Player 1 make a move: ";
-            cin >> respone_1;
-            if(play(respone_1, 0) == 0)
-            {
-                cout << "Invalid step." << endl;
+            //checking if input is correct
+            bool correct = false;
+            while(!correct)
+            {            
+                int respone_1;
+                cout << "Player 1 make a move: ";
+                cin >> respone_1;
+                correct = play(respone_1, 0);
+                if(!correct)
+                    cout << "Invalid step, try again." << endl;
             }
       
-            int respone_2;
-            cout << "Player 2 make a move: ";
-            cin >> respone_2;
-            if(play(respone_2, 1) == 0)
-            {
-                cout << "Invalid step."<< endl;
+            correct = false;
+            while(!correct)
+            {            
+                int respone_2;
+                cout << "Player 2 make a move: ";
+                cin >> respone_2;
+                correct = play(respone_2, 1);
+                if(!correct)
+                    cout << "Invalid step, try again." << endl;
             }
      
 
             //input positions of existing xs and os
             //draw();
-
+            show_array();
 
         }
         
