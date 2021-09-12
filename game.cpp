@@ -29,7 +29,7 @@ void show_array()
     for (size_t i = 0; i < dimension; i++)
     {
         for (size_t j = 0; j < dimension; j++)
-            cout << arr[i][j];
+            cout << arr[i][j] << " ";
     cout << endl;
     }
 }
@@ -84,6 +84,36 @@ void draw()
 
     
 }
+int won_or_not(int res, int player_id)
+{
+    int row = res /10;
+    int column = res %10;
+    bool won = true;
+
+    //row wise
+    for (size_t i = 0; i < dimension; i++)
+    {
+        if (arr[row][i] != player_id)
+        {
+            won = false;
+        }
+    }
+    
+    //columns wise
+
+
+
+
+    //cross wise
+
+
+
+
+    
+
+    return 0;
+}   
+
 
 int play(int res, int player_num)
 {
@@ -95,9 +125,13 @@ int play(int res, int player_num)
     }
 
     if(player_num == 0)
+    {
         arr[res/10][res%10] = 0;
+    }
     else
+    {
         arr[res/10][res%10] = 1;
+    }
     return 1;
 }
 /*
@@ -105,6 +139,8 @@ TODO:
     1. Make game fluid - if step is invalid ,request new - done
     2. check when one player wins
     3. handle exceptions ->longer input, string ect.
+    4. draw game
+    5. use names make it fancy
 */
 
 int main()
@@ -131,6 +167,8 @@ int main()
                     cout << "Invalid step, try again." << endl;
             }
       
+            //check if array is full or won
+
             correct = false;
             while(!correct)
             {            
@@ -142,8 +180,10 @@ int main()
                     cout << "Invalid step, try again." << endl;
             }
      
+            //check if array is full or won
 
-            //input positions of existing xs and os
+
+
             //draw();
             show_array();
 
