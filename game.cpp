@@ -100,8 +100,13 @@ bool won_or_not(int res, int player_id)
         }
     }
     
+    //resetting for column wise check
+    if(won)
+        return won;
+    else
+        won = true;
+
     //columns wise
-    /*
     for (size_t i = 0; i < dimension; i++)
     {
         if (arr[i][column] != player_id)
@@ -110,12 +115,38 @@ bool won_or_not(int res, int player_id)
             break;
         }
     }
-    */
-    //cross wise
-    //TODO
 
+    //resetting for cross wise check
+    if(won)
+        return won;
+    else
+        won = true;
 
+    //cross wise - 1 top left to bottom right
+    for (size_t i = 0; i < dimension; i++)
+    {
+        if (arr[i][i] != player_id)
+        {
+            won = false;
+            break;
+        }
+    }
+    
+    if(won)
+        return won;
+    else
+        won = true;
 
+    //cross wise - 2 bottom left to top right
+    for (size_t i = 0; i < dimension; i++)
+    {
+        if (arr[dimension-i-1][i] != player_id)
+        {
+            won = false;
+            break;
+        }
+        
+    }
 
     return won;
 }   
@@ -143,7 +174,7 @@ int play(int res, int player_num)
 /*
 TODO:
     1. Make game fluid - if step is invalid ,request new - done
-    2. check when one player wins - in progress...
+    2. check when one player wins or full - in progress...
     3. handle exceptions ->longer input, string ect.
     4. draw game
     5. use names make it fancy
@@ -151,72 +182,59 @@ TODO:
 
 int main()
 {
-    if (!game_over)
+
+    //string start_signal;
+    //string * names  = setup();
+    //cout << "Welcome " << names[0] << " and " << names[1] << ". Type \"go\" to start the game." << endl;
+    //cin >> start_signal;
+    reset_array();
+
+    while (!game_over)
     {
-        string start_signal;
-        string * names  = setup();
-        //cout << "Welcome " << names[0] << " and " << names[1] << ". Type \"go\" to start the game." << endl;
-        //cin >> start_signal;
-        reset_array();
-
-        while (!game_over)
-        {
-            //checking if input is correct
-            bool correct = false;
-            while(!correct && !game_over)
-            {            
-                int respone_1;
-                cout << "Player 1 make a move: ";
-                cin >> respone_1;
-                correct = play(respone_1, 0);
-                if(!correct)
-                    cout << "Invalid step, try again." << endl;
-                else
+        //checking if input is correct
+        bool correct = false;
+        while(!correct && !game_over)
+        {            
+            int respone_1;
+            cout << "Player 1 make a move: ";
+            cin >> respone_1;
+            correct = play(respone_1, 0);
+            if(!correct)
+                cout << "Invalid step, try again." << endl;
+            else
+            {
+                if(won_or_not(respone_1, 0))
                 {
-                    if(won_or_not(respone_1, 0))
-                    {
-                        cout << "player 1 won" << endl;
-                        game_over = true;
-                    }
+                    cout << "player 1 won" << endl;
+                    game_over = true;
                 }
             }
-      
-            //check if array is full or won
-
-            correct = false;
-            while(!correct && !game_over)
-            {            
-                int respone_2;
-                cout << "Player 2 make a move: ";
-                cin >> respone_2;
-                correct = play(respone_2, 1);
-                if(!correct)
-                    cout << "Invalid step, try again." << endl;
-                else
-                {
-                    if(won_or_not(respone_2, 1))
-                    {
-                        cout << "player 2 won" << endl;
-                        game_over = true;
-                    }
-                }
-            }
-     
-            //check if array is full or won
-
-
-
-            //draw();
-            show_array();
-
         }
-        cout << endl;
-        cout << "Game over, thanks for playing." << endl;
-        
-            
+
+        correct = false;
+        while(!correct && !game_over)
+        {            
+            int respone_2;
+            cout << "Player 2 make a move: ";
+            cin >> respone_2;
+            correct = play(respone_2, 1);
+            if(!correct)
+                cout << "Invalid step, try again." << endl;
+            else
+            {
+                if(won_or_not(respone_2, 1))
+                {
+                    cout << "player 2 won" << endl;
+                    game_over = true;
+                }
+            }
+        }
+
+        //draw();
+        show_array();
+
     }
-    
-
-
+    cout << endl;
+    cout << "Game over, thanks for playing." << endl;
     return 0;
 }
