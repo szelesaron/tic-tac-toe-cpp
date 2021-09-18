@@ -84,7 +84,7 @@ void draw()
 
     
 }
-int won_or_not(int res, int player_id)
+bool won_or_not(int res, int player_id)
 {
     int row = res /10;
     int column = res %10;
@@ -96,22 +96,28 @@ int won_or_not(int res, int player_id)
         if (arr[row][i] != player_id)
         {
             won = false;
+            break;
         }
     }
     
     //columns wise
-
-
-
-
+    /*
+    for (size_t i = 0; i < dimension; i++)
+    {
+        if (arr[i][column] != player_id)
+        {
+            won = false;
+            break;
+        }
+    }
+    */
     //cross wise
+    //TODO
 
 
 
 
-    
-
-    return 0;
+    return won;
 }   
 
 
@@ -137,7 +143,7 @@ int play(int res, int player_num)
 /*
 TODO:
     1. Make game fluid - if step is invalid ,request new - done
-    2. check when one player wins
+    2. check when one player wins - in progress...
     3. handle exceptions ->longer input, string ect.
     4. draw game
     5. use names make it fancy
@@ -157,7 +163,7 @@ int main()
         {
             //checking if input is correct
             bool correct = false;
-            while(!correct)
+            while(!correct && !game_over)
             {            
                 int respone_1;
                 cout << "Player 1 make a move: ";
@@ -165,12 +171,20 @@ int main()
                 correct = play(respone_1, 0);
                 if(!correct)
                     cout << "Invalid step, try again." << endl;
+                else
+                {
+                    if(won_or_not(respone_1, 0))
+                    {
+                        cout << "player 1 won" << endl;
+                        game_over = true;
+                    }
+                }
             }
       
             //check if array is full or won
 
             correct = false;
-            while(!correct)
+            while(!correct && !game_over)
             {            
                 int respone_2;
                 cout << "Player 2 make a move: ";
@@ -178,6 +192,14 @@ int main()
                 correct = play(respone_2, 1);
                 if(!correct)
                     cout << "Invalid step, try again." << endl;
+                else
+                {
+                    if(won_or_not(respone_2, 1))
+                    {
+                        cout << "player 2 won" << endl;
+                        game_over = true;
+                    }
+                }
             }
      
             //check if array is full or won
@@ -188,8 +210,8 @@ int main()
             show_array();
 
         }
-        
-
+        cout << endl;
+        cout << "Game over, thanks for playing." << endl;
         
             
     }
