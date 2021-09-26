@@ -84,6 +84,21 @@ void draw()
 
     
 }
+bool full_or_not()
+{
+    for (size_t i = 0; i < dimension; i++)
+    {
+        for (size_t j = 0; j < dimension; j++)
+        {
+            if (arr[i][j] == -1)
+                return false;
+        }
+        
+    }
+    return true;
+    
+}
+
 bool won_or_not(int res, int player_id)
 {
     int row = res /10;
@@ -174,10 +189,12 @@ int play(int res, int player_num)
 /*
 TODO:
     1. Make game fluid - if step is invalid ,request new - done
-    2. check when one player wins or full - in progress...
-    3. handle exceptions ->longer input, string ect.
+    2. check when one player wins or full - done
+
+    3. handle exceptions ->longer input, string ect. - in progress...
+    
     4. draw game
-    5. use names make it fancy
+    5. use names make it fancy refactor
 */
 
 int main()
@@ -211,6 +228,12 @@ int main()
             }
         }
 
+        //checking for draw
+        if(full_or_not()){
+            game_over = true;
+            cout << "Draw." << endl;
+        }
+
         correct = false;
         while(!correct && !game_over)
         {            
@@ -228,6 +251,12 @@ int main()
                     game_over = true;
                 }
             }
+        }
+
+        //checking for draw
+        if(full_or_not()){
+            game_over = true;
+            cout << "Draw." << endl;
         }
 
         //draw();
