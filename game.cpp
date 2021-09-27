@@ -215,9 +215,11 @@ int main()
             int respone_1;
             cout << "Player 1 make a move: ";
             cin >> respone_1;
+            
             correct = play(respone_1, 0);
-            if(!correct)
+            if(!correct) 
                 cout << "Invalid step, try again." << endl;
+
             else
             {
                 if(won_or_not(respone_1, 0))
