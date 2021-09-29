@@ -166,10 +166,11 @@ bool won_or_not(int res, int player_id)
     return won;
 }   
 
-
+//if place not occupied insert value and return 1 otherwise 0
 int play(int res, int player_num)
 {
     //player1 = O, player2 = X
+
 
     if (arr[res/10][res%10] not_eq -1 || res < 0 || res > (dimension*10+dimension))
     {
@@ -190,10 +191,10 @@ int play(int res, int player_num)
 TODO:
     1. Make game fluid - if step is invalid ,request new - done
     2. check when one player wins or full - done
-
-    3. handle exceptions ->longer input, string ect. - in progress...
+    3. handle exceptions ->longer input, string ect. - done
     
-    4. draw game
+    4. draw game - in progress...
+
     5. use names make it fancy refactor
 */
 
@@ -212,17 +213,40 @@ int main()
         bool correct = false;
         while(!correct && !game_over)
         {            
-            int respone_1;
+            string response_1_str;
             cout << "Player 1 make a move: ";
-            cin >> respone_1;
+            cin >> response_1_str;
+
+            //checking for correct input - strings
+            bool correct_type = true;
+            while(1)
+            {
+                for (size_t i = 0; i < response_1_str.length(); i++)
+                {
+                    if (!isdigit(response_1_str[i]))
+                    {
+                        cout << "Wrong input type, try again." << endl;
+                        correct_type = false;
+                        cout << "Player 1 make a move: ";
+                        cin >> response_1_str;
+                        break;
+                    }
+                    else correct_type = true;
+                }
+                if (correct_type) break;  
+            }
             
-            correct = play(respone_1, 0);
+            //convert back to int
+            int response_1 = stoi(response_1_str);
+
+
+            correct = play(response_1, 0);
             if(!correct) 
                 cout << "Invalid step, try again." << endl;
 
             else
             {
-                if(won_or_not(respone_1, 0))
+                if(won_or_not(response_1, 0))
                 {
                     cout << "player 1 won" << endl;
                     game_over = true;
@@ -239,15 +263,39 @@ int main()
         correct = false;
         while(!correct && !game_over)
         {            
-            int respone_2;
+            string response_2_str;
             cout << "Player 2 make a move: ";
-            cin >> respone_2;
-            correct = play(respone_2, 1);
+            cin >> response_2_str;
+
+            //checking for correct input - strings
+            bool correct_type = true;
+            while(1)
+            {
+                for (size_t i = 0; i < response_2_str.length(); i++)
+                {
+                    if (!isdigit(response_2_str[i]))
+                    {
+                        cout << "Wrong input type, try again." << endl;
+                        correct_type = false;
+                        cout << "Player 2 make a move: ";
+                        cin >> response_2_str;
+                        break;
+                    }
+                    else correct_type = true;
+                }
+                if (correct_type) break;  
+            }
+            
+            //convert back to int
+            int response_2 = stoi(response_2_str);
+
+
+            correct = play(response_2, 1);
             if(!correct)
                 cout << "Invalid step, try again." << endl;
             else
             {
-                if(won_or_not(respone_2, 1))
+                if(won_or_not(response_2, 1))
                 {
                     cout << "player 2 won" << endl;
                     game_over = true;
